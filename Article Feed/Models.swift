@@ -62,6 +62,27 @@ struct AuthResponse: Codable {
     let email: String
     let name: String
     let message: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case accessToken
+        case refreshToken
+        case tokenType
+        case userId
+        case email
+        case name
+        case message
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        accessToken = try container.decode(String.self, forKey: .accessToken)
+        refreshToken = try container.decode(String.self, forKey: .refreshToken)
+        tokenType = try container.decode(String.self, forKey: .tokenType)
+        userId = try container.decode(Int.self, forKey: .userId)
+        email = try container.decode(String.self, forKey: .email)
+        name = try container.decode(String.self, forKey: .name)
+        message = try? container.decode(String.self, forKey: .message)
+    }
 }
 
 struct RefreshTokenRequest: Codable {
