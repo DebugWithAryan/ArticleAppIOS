@@ -10,44 +10,45 @@ import SwiftUI
 
 struct Constants {
     
-    static let baseUrl = "https://articlems-backend.onrender.com"
-    
-    struct EndPoints {
-        static let register = "/auth/register"
-        static let login = "/auth/login"
-        static let verifyEmail = "/auth/verify-email"
-        static let resendVerification = "/auth/resend-verification"
-        static let forgotPassword = "/auth/forgot-password"
-        static let resetPassword = "/auth/reset-password"
-        static let refreshToken = "/auth/refresh-token"
-        static let logout = "/auth/logout"
+    static let baseUrl = "https://articlems-backend.onrender.com/api"
         
-        static let articles = "/articles"
-        static let myArticles = "/articles/my"
-        static let searchArticles = "/articles/search"
-        
-        static let emailHealth = "/health/email"
-    }
+        struct EndPoints {
+            static let register = "/auth/register"
+            static let login = "/auth/login"
+            static let verifyEmail = "/auth/verify-email"
+            static let resendVerification = "/auth/resend-verification"
+            static let forgotPassword = "/auth/forgot-password"
+            static let resetPassword = "/auth/reset-password"
+            static let refreshToken = "/auth/refresh"
+            static let logout = "/auth/logout"
+            
+            static let articles = "/articles"
+                                                              
+            static let myArticles = "/articles/my"
+            static let searchArticles = "/articles/search"
+            
+            static let emailHealth = "/health/email"
+        }
     
     
     struct Colors {
-        
-        static let primary = Color("007AFF")
-        static let background = Color("000000")
-        static let cardBackground = Color("1C1C1E")
-        static let secondaryBackground = Color("2C2C2E")
+        static let primary = Color(hex: "007AFF")
+        static let background = Color(hex: "000000")
+        static let cardBackground = Color(hex: "1C1C1E")
+        static let secondaryBackground = Color(hex: "2C2C2E")
         
         static let textPrimary = Color.white
-        static let textSecondary = Color("8E8E93")
-        static let textTertiary = Color("636366")
+        static let textSecondary = Color(hex: "8E8E93")
+        static let textTertiary = Color(hex: "636366")
         
-        static let success = Color("34C759")
-        static let error = Color("FF3B30")
-        static let warning = Color("FF9500")
+        static let success = Color(hex: "34C759")
+        static let error = Color(hex: "FF3B30")
+        static let warning = Color(hex: "FF9500")
         
-        static let border = Color("38383A")
-        static let divider = Color("48484A")
+        static let border = Color(hex: "38383A")
+        static let divider = Color(hex: "48484A")
     }
+
     
     struct UI {
         static let cornerRadius: CGFloat = 12
@@ -66,5 +67,23 @@ struct Constants {
         static let userEmail = "userEmail"
         static let userName = "userName"
         static let isLoggedIn = "isLoggedIn"
+    }
+    
+    
+}
+
+extension Color {
+    init(hex: String) {
+        let scanner = Scanner(string: hex)
+        _ = scanner.scanString("#")
+        
+        var rgb: UInt64 = 0
+        scanner.scanHexInt64(&rgb)
+        
+        let r = Double((rgb >> 16) & 0xFF) / 255
+        let g = Double((rgb >> 8) & 0xFF) / 255
+        let b = Double(rgb & 0xFF) / 255
+        
+        self.init(red: r, green: g, blue: b)
     }
 }

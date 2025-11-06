@@ -22,20 +22,20 @@ struct User: Codable, Identifiable {
 }
 
 struct Article: Codable, Identifiable {
-    let id : Int
-    let title : String
-    let content : String
-    let authorName : String
-    let authodId : Int
-    let status : String
-    let viewCount : Int
-    let createdAt : String
-    let updatedAt : String?
+    let id: Int
+    let title: String
+    let content: String
+    let authorName: String
+    let authorId: Int
+    let status: String
+    let viewCount: Int
+    let createdAt: String
+    let updatedAt: String?
     
-    var formattedCreateAt : String {
+    var formattedCreatedAt: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        if let date = formatter.date (from: createdAt){
+        if let date = formatter.date(from: createdAt) {
             formatter.dateFormat = "dd MMM, yyyy"
             return formatter.string(from: date)
         }
@@ -43,19 +43,18 @@ struct Article: Codable, Identifiable {
     }
 }
 
-struct RegisterRequest : Codable {
-    let name : String
-    let email : String
-    let password : String
+struct RegisterRequest: Codable {
+    let name: String
+    let email: String
+    let password: String
 }
 
-struct LoginRequest : Codable {
-    let email : String
-    let password : String
+struct LoginRequest: Codable {
+    let email: String
+    let password: String
 }
 
-
-struct AuthResponse : Codable {
+struct AuthResponse: Codable {
     let accessToken: String
     let refreshToken: String
     let tokenType: String
@@ -78,7 +77,7 @@ struct ArticleRequest: Codable {
     let content: String
 }
 
-struct ArticlesResponse : Codable {
+struct ArticlesResponse: Codable {
     let content: [Article]
     let pageable: Pageable
     let TotalElements: Int
@@ -108,6 +107,11 @@ struct ResetPasswordRequest: Codable {
     let newPassword: String
 }
 
-struct ResendVerificationRequest: Codable{
+struct ResendVerificationRequest: Codable {
     let email: String
 }
+
+struct VerifyEmailRequest: Codable {
+    let token: String
+}
+

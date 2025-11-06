@@ -123,6 +123,62 @@ class AuthManager: ObservableObject {
         }
     }
     
+    // MARK: - Email Verification
+    
+    func resendVerificationEmail(_ email: String) async {
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
+        }
+        do {
+            let request = ResendVerificationRequest(email: email)
+            let response: MessageResponse = try await NetworkManager.shared.request(
+                endpoint: Constants.EndPoints.resendVerification,
+                method: "POST",
+                body: request,
+                requireAuth: false
+            )
+            await MainActor.run {
+                isLoading = false
+                // Surface backend message so the UI can show success text
+                errorMessage = response.message
+            }
+        } catch {
+            await MainActor.run {
+                isLoading = false
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    func verifyEmail(_ token: String) async {
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
+        }
+        do {
+            let request = VerifyEmailRequest(token: token)
+            let response: MessageResponse = try await NetworkManager.shared.request(
+                endpoint: Constants.EndPoints.verifyEmail,
+                method: "POST",
+                body: request,
+                requireAuth: false
+            )
+            await MainActor.run {
+                isLoading = false
+                // Backend returns a message; the view can act on it.
+                errorMessage = response.message
+                // Depending on backend flow, you might choose to set isAuthenticated = true here
+                // after verification and a successful login exchange. Keeping minimal for now.
+            }
+        } catch {
+            await MainActor.run {
+                isLoading = false
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
     
     private func saveAuthData(_ response: AuthResponse) {
         UserDefaults.standard.set(response.accessToken, forKey: Constants.UserDefaultsKeys.accessToken)
@@ -147,3 +203,4 @@ class AuthManager: ObservableObject {
         isAuthenticated = false
     }
 }
+

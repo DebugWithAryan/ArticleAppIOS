@@ -115,7 +115,7 @@ struct ArticleCard: View {
                         .font(.caption)
                         .foregroundColor(Constants.Colors.textTertiary)
                     
-                    Text(article.formattedCreateAt)
+                    Text(article.formattedCreatedAt)
                         .font(.caption)
                         .foregroundColor(Constants.Colors.textTertiary)
                 }
@@ -184,4 +184,3 @@ struct EmptyStateView: View {
         .padding()
     }
 }
-

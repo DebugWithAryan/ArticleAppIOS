@@ -65,11 +65,15 @@ struct RegisterView: View {
                             if showPassword {
                                 TextField("Password", text: $password)
                                     .foregroundColor(Constants.Colors.textPrimary)
-                                    .onChange(of: password) { _ in validatePassword() }
+                                    .onChange(of: password) {
+                                        validatePassword()
+                                    }
                             } else {
                                 SecureField("Password", text: $password)
                                     .foregroundColor(Constants.Colors.textPrimary)
-                                    .onChange(of: password) { _ in validatePassword() }
+                                    .onChange(of: password) {
+                                        validatePassword()
+                                    }
                             }
                             
                             Button(action: { showPassword.toggle() }) {
@@ -224,4 +228,3 @@ struct PasswordRequirement: View {
         }
     }
 }
-
